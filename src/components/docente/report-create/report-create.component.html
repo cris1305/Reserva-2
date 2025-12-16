@@ -1,0 +1,42 @@
+
+
+<div class="bg-white p-6 rounded-xl shadow-lg max-w-2xl mx-auto">
+    @if (resourceId() > 0) {
+        <div class="mb-6">
+            <a [routerLink]="backLinkUrl()" class="text-indigo-600 hover:underline text-sm mb-2 inline-block">&larr; {{ backLinkText() }}</a>
+            <h1 class="text-2xl font-bold text-gray-800">Reportar Incidencia</h1>
+            <p class="text-slate-600">Reportando un problema para: <strong>{{ resourceName() }}</strong></p>
+        </div>
+
+        <form (ngSubmit)="onSubmit(reportForm)" #reportForm="ngForm" class="space-y-4">
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Título del Reporte</label>
+                <input type="text" id="title" name="title" [(ngModel)]="newReport.title" required 
+                       placeholder="Ej: Proyector no enciende"
+                       class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Descripción del Problema</label>
+                <textarea id="description" name="description" [(ngModel)]="newReport.description" required rows="5" 
+                          placeholder="Por favor, sea lo más descriptivo posible."
+                          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+            </div>
+
+            <div class="flex justify-end pt-4">
+                <button type="submit" [disabled]="reportForm.invalid" 
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md disabled:bg-indigo-400">
+                    Enviar Reporte
+                </button>
+            </div>
+        </form>
+    } @else {
+        <div class="text-center p-8">
+             <h1 class="text-2xl font-bold text-rose-600">Error al Cargar el Formulario</h1>
+             <p class="text-slate-600 mt-4">No se pudo identificar el recurso para el reporte. Por favor, asegúrese de acceder a esta página a través de un enlace válido.</p>
+             <a [routerLink]="backLinkUrl()" class="mt-6 inline-block bg-indigo-600 text-white font-bold py-2 px-4 rounded-md">
+                {{ backLinkText() }}
+             </a>
+        </div>
+    }
+</div>

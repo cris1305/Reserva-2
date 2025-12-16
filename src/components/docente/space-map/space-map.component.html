@@ -1,0 +1,130 @@
+
+<div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h1 class="text-2xl font-bold text-gray-800 text-center md:text-left">Mapa de Espacios del Campus</h1>
+         <div class="relative w-full md:w-auto">
+            <input 
+                type="text" 
+                placeholder="Buscar espacio por nombre..."
+                [value]="searchTerm()"
+                (input)="onSearch($event)"
+                class="w-full md:w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="relative">
+        <div id="map" class="h-[65vh] w-full rounded-lg shadow-md border"></div>
+        @if (noResults()) {
+            <div class="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center rounded-lg pointer-events-none">
+                 <div class="text-center p-6 bg-slate-100/90 rounded-lg shadow-md">
+                    <svg class="mx-auto h-12 w-12 text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No se encontraron resultados</h3>
+                    <p class="mt-1 text-sm text-slate-500">No se encontraron espacios que coincidan con tu búsqueda.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Space Details and Reservation Modal -->
+@if (selectedSpace(); as space) {
+    <div class="fixed inset-0 bg-black bg-opacity-60 z-[1000] flex items-center justify-center animate-fade-in p-4" (click)="closeModal()">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl m-4 z-[1001] animate-slide-in-up flex flex-col max-h-[90vh]" (click)="$event.stopPropagation()">
+            
+            @if(space.imageUrl) {
+                <img [src]="space.imageUrl" [alt]="space.name" class="w-full h-48 object-cover rounded-t-2xl">
+            }
+
+            <div class="p-6 border-b flex justify-between items-start">
+                <div>
+                    <h3 class="text-xl font-semibold text-gray-800">{{ space.name }}</h3>
+                    <p class="text-slate-600">{{ dataService.getSpaceType(space.spaceTypeId)?.name }} - Capacidad: {{ space.capacity }} personas</p>
+                </div>
+                <button (click)="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+            
+            <div class="p-6 space-y-6 overflow-y-auto">
+                <p class="text-gray-700">{{ space.description }}</p>
+
+                <!-- Availability -->
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Disponibilidad (Próximos 7 días)</h4>
+                    <div class="space-y-3">
+                        @for (day of weeklyAvailability(); track day.date) {
+                            <div class="p-3 bg-slate-50 rounded-lg">
+                                <p class="font-semibold text-slate-800">{{ day.date | date:'EEEE, d MMMM' }}</p>
+                                @if (day.reservations.length > 0) {
+                                    <ul class="mt-1 text-sm text-rose-600 list-disc list-inside">
+                                        @for (res of day.reservations; track res.id) {
+                                            <li>Ocupado: {{ res.startTime | date:'HH:mm' }} - {{ res.endTime | date:'HH:mm' }}</li>
+                                        }
+                                    </ul>
+                                } @else {
+                                    <p class="mt-1 text-sm text-teal-600">Todos los horarios disponibles</p>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Reservation Form Toggle -->
+                @if (!showReservationForm()) {
+                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                        <a [routerLink]="reportUrl()" 
+                           [queryParams]="{ resourceType: 'space', resourceId: space.id, from: '/map' }"
+                           class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-6 rounded-md transition-colors w-full sm:w-auto text-center">
+                            Reportar Incidencia
+                        </a>
+                        <button (click)="revealReservationForm()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md transition-colors w-full sm:w-auto">
+                            Reservar este Espacio
+                        </button>
+                    </div>
+                }
+
+                <!-- Reservation Form -->
+                @if (showReservationForm()) {
+                    <form (ngSubmit)="onSubmit(reservationForm)" #reservationForm="ngForm" class="pt-4 border-t animate-fade-in" id="reservationFormContainer">
+                        <h4 class="font-semibold text-gray-800 mb-4">Nueva Solicitud de Reserva</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="reservationDate" class="block text-sm font-medium text-gray-700">Fecha</label>
+                                <input type="date" id="reservationDate" name="reservationDate" [(ngModel)]="reservationDate" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="startTime" class="block text-sm font-medium text-gray-700">Hora de Inicio</label>
+                                    <select id="startTime" name="startTime" [(ngModel)]="startTime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="" disabled>Seleccionar hora</option>
+                                        @for (slot of availableTimeSlots; track slot) { <option [value]="slot">{{ slot }}</option> }
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="endTime" class="block text-sm font-medium text-gray-700">Hora de Fin</label>
+                                    <select id="endTime" name="endTime" [(ngModel)]="endTime" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                                        <option value="" disabled>Seleccionar hora</option>
+                                        @for (slot of availableTimeSlots; track slot) { <option [value]="slot">{{ slot }}</option> }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="pt-6 flex justify-end space-x-3">
+                            <button type="button" (click)="showReservationForm.set(false)" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-md">
+                                Cancelar
+                            </button>
+                            <button type="submit" [disabled]="reservationForm.invalid" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-indigo-400">
+                                Enviar Solicitud
+                            </button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+}

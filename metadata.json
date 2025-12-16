@@ -1,0 +1,5 @@
+{
+  "name": "Mapa INATEC",
+  "description": "Una plataforma web interna para que los docentes de INATEC soliciten la reserva de recursos (Equipos y Espacios) de manera eficiente, y para que los administradores gestionen el inventario y las solicitudes.",
+  "requestFramePermissions": []
+}

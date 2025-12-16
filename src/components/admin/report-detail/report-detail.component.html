@@ -1,0 +1,62 @@
+
+@if (report(); as currentReport) {
+<div class="space-y-6">
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-4">
+            <div>
+                <a routerLink="/admin/reports" class="text-indigo-600 hover:underline text-sm mb-2 inline-block">&larr; Volver a todos los reportes</a>
+                <h1 class="text-2xl font-bold text-gray-800">{{ currentReport.title }}</h1>
+                <p class="text-sm text-slate-500 mt-1">
+                    Reportado por <strong>{{ dataService.getUserName(currentReport.solicitanteId) }}</strong> sobre <strong>{{ dataService.getResourceName(currentReport) }}</strong>
+                </p>
+            </div>
+            <div class="flex items-center gap-4">
+                <span [class]="'px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full ' + getStatusClass(currentReport.status)">
+                    {{ currentReport.status }}
+                </span>
+                <select [value]="currentReport.status" (change)="onStatusChange($event)" class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="Abierto">Abierto</option>
+                    <option value="En Proceso">En Proceso</option>
+                    <option value="Cerrado">Cerrado</option>
+                </select>
+            </div>
+        </div>
+        <hr class="my-4">
+        <p class="text-gray-700">{{ currentReport.description }}</p>
+    </div>
+
+    <!-- Conversation Thread -->
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-xl font-bold mb-4 text-gray-700">Conversación</h2>
+        <div class="space-y-4 max-h-[50vh] overflow-y-auto pr-4">
+            @for (message of messages(); track message.id) {
+                <div [class]="'flex ' + (message.authorId === authService.currentUser()?.id ? 'justify-end' : 'justify-start')">
+                    <div [class]="'max-w-xl p-3 rounded-xl ' + (message.authorId === authService.currentUser()?.id ? 'bg-indigo-500 text-white' : 'bg-slate-100 text-gray-800')">
+                        <p class="font-bold text-sm">{{ dataService.getUserName(message.authorId) }}</p>
+                        <p>{{ message.text }}</p>
+                        <p class="text-xs mt-1 text-right opacity-75">{{ message.sentAt | date:'short' }}</p>
+                    </div>
+                </div>
+            } @empty {
+                <p class="text-slate-500 text-center">No hay mensajes en esta conversación aún.</p>
+            }
+        </div>
+        
+        <!-- Reply Form -->
+        <div class="mt-6 border-t pt-4">
+            <form (ngSubmit)="sendMessage()" class="flex gap-4">
+                <input type="text" [(ngModel)]="newMessage" name="newMessage" placeholder="Escribe tu respuesta..." class="flex-grow border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                <button type="submit" [disabled]="!newMessage().trim()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-md disabled:bg-indigo-400">
+                    Enviar
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+} @else {
+    <div class="text-center p-8 bg-white rounded-xl shadow-lg">
+        <h2 class="text-xl font-semibold text-gray-700">Reporte no encontrado</h2>
+        <p class="text-slate-500 mt-2">El reporte que buscas no existe o ha sido eliminado.</p>
+        <a routerLink="/admin/reports" class="mt-4 inline-block bg-indigo-600 text-white font-bold py-2 px-4 rounded-md">Volver a Reportes</a>
+    </div>
+}
