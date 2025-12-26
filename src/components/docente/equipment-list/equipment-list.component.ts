@@ -1,12 +1,16 @@
-
-
-import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, computed, ElementRef, viewChild } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
+import { GeminiService } from '../../../services/gemini.service';
 import { Equipment } from '../../../models';
+
+type SuggestionResult = {
+  recommendation: Equipment;
+  justification: string;
+}
 
 @Component({
   selector: 'app-equipment-list',
@@ -19,7 +23,10 @@ export class EquipmentListComponent {
   dataService = inject(DataService);
   authService = inject(AuthService);
   toastService = inject(ToastService);
+  geminiService = inject(GeminiService);
   
+  equipmentContainer = viewChild<ElementRef>('equipmentContainer');
+
   searchTerm = signal('');
   equipmentList = this.dataService.equipment;
 
@@ -35,6 +42,10 @@ export class EquipmentListComponent {
   
   selectedEquipment = signal<Equipment | null>(null);
 
+  // IA Suggestion State
+  suggestionQuery = signal('');
+  suggestionResult = signal<SuggestionResult | 'loading' | 'error' | 'idle' | 'not_found'>('idle');
+
   reservationDate = '';
   startTime = '';
   endTime = '';
@@ -43,6 +54,36 @@ export class EquipmentListComponent {
     '08:00', '09:00', '10:00', '11:00', '12:00', '13:00',
     '14:00', '15:00', '16:00', '17:00', '18:00'
   ];
+
+  async getAiSuggestion() {
+    if (!this.suggestionQuery().trim()) return;
+    this.suggestionResult.set('loading');
+    try {
+      const availableEquipment = this.equipmentList().filter(e => e.status === 'Disponible');
+      const result = await this.geminiService.generateEquipmentRecommendation(this.suggestionQuery(), availableEquipment);
+      
+      const recommended = this.equipmentList().find(e => e.id === result.recommendedEquipmentId);
+
+      if (recommended) {
+        this.suggestionResult.set({
+          recommendation: recommended,
+          justification: result.justification
+        });
+        // Scroll to the item after a short delay to allow UI to update
+        setTimeout(() => this.scrollToRecommended(recommended.id), 100);
+      } else {
+        this.suggestionResult.set('not_found');
+      }
+
+    } catch (error) {
+      this.suggestionResult.set('error');
+    }
+  }
+
+  scrollToRecommended(equipmentId: number) {
+    const element = document.getElementById(`equipment-${equipmentId}`);
+    element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
   onSearch(event: Event) {
     const input = event.target as HTMLInputElement;

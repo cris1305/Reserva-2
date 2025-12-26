@@ -28,8 +28,8 @@ export class ReportListComponent {
   getStatusClass(status: ReportStatus): string {
     switch(status) {
       case 'Abierto': return 'bg-rose-100 text-rose-800';
-      case 'En Proceso': return 'bg-amber-100 text-amber-800';
-      case 'Cerrado': return 'bg-teal-100 text-teal-800';
+      case 'En Proceso': return 'bg-orange-100 text-orange-800';
+      case 'Cerrado': return 'bg-green-100 text-green-800';
       default: return 'bg-slate-100 text-slate-800';
     }
   }

@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
+import { GeminiService } from '../../../services/gemini.service';
 import { Space } from '../../../models';
 
 declare var L: any; // Declare Leaflet to avoid TypeScript errors
@@ -20,6 +21,7 @@ export class SpaceMapComponent implements AfterViewInit, OnDestroy {
   dataService = inject(DataService);
   authService = inject(AuthService);
   toastService = inject(ToastService);
+  geminiService = inject(GeminiService);
   
   private map: any;
   private markers: any[] = [];
@@ -27,6 +29,9 @@ export class SpaceMapComponent implements AfterViewInit, OnDestroy {
   showReservationForm = signal(false);
   searchTerm = signal('');
   noResults = signal(false);
+
+  // IA Summary State
+  aiSpaceSummary = signal<'loading' | string | null>('loading');
 
   reservationDate = '';
   startTime = '';
@@ -50,8 +55,8 @@ export class SpaceMapComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  private greenIcon = this.createIcon('#22c55e'); // Libre
-  private orangeIcon = this.createIcon('#f97316'); // En Espera
+  private greenIcon = this.createIcon('#8CC63F'); // Libre (Verde Tecnológico)
+  private orangeIcon = this.createIcon('#F7941E'); // En Espera (Naranja Acción)
   private redIcon = this.createIcon('#ef4444'); // Reservada
 
   weeklyAvailability = computed(() => {
@@ -130,8 +135,8 @@ export class SpaceMapComponent implements AfterViewInit, OnDestroy {
     legend.onAdd = () => {
         const div = L.DomUtil.create('div', 'info legend bg-white p-3 rounded-lg shadow-lg space-y-2');
         const statuses = {
-            'Libre': '#22c55e',
-            'En Espera': '#f97316',
+            'Libre': '#8CC63F',
+            'En Espera': '#F7941E',
             'Reservada': '#ef4444'
         };
         let innerHTML = '<h4 class="font-bold text-sm mb-2 text-gray-700">Estado Actual</h4>';
@@ -228,6 +233,18 @@ export class SpaceMapComponent implements AfterViewInit, OnDestroy {
   openModal(space: Space) {
     this.selectedSpace.set(space);
     this.showReservationForm.set(false);
+    this.getAiSpaceSummary();
+  }
+
+  async getAiSpaceSummary() {
+    if (!this.selectedSpace()) return;
+    this.aiSpaceSummary.set('loading');
+    try {
+        const summary = await this.geminiService.generateSpaceAvailabilitySummary(this.selectedSpace()!, this.weeklyAvailability());
+        this.aiSpaceSummary.set(summary);
+    } catch(e) {
+        this.aiSpaceSummary.set(null); // Error state
+    }
   }
 
   closeModal() {
@@ -236,6 +253,7 @@ export class SpaceMapComponent implements AfterViewInit, OnDestroy {
     this.reservationDate = '';
     this.startTime = '';
     this.endTime = '';
+    this.aiSpaceSummary.set('loading'); // Reset for next modal opening
   }
 
   revealReservationForm() {

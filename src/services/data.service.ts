@@ -1,6 +1,4 @@
 
-
-
 import { Injectable, signal, computed } from '@angular/core';
 import { User, Category, Equipment, Reservation, ReservationStatus, UserRole, SpaceType, Space, Report, ReportStatus, ReportMessage } from '../models';
 
@@ -101,9 +99,8 @@ export class DataService {
 
   private seedData() {
     this.users.set([
-      { id: 1, fullName: 'Admin User', email: 'admin@inatec.edu', password: 'password', role: 'Admin' },
-      { id: 2, fullName: 'Cristofer Gonzalez', email: 'docente@inatec.edu', password: 'password', role: 'Docente' },
-      { id: 3, fullName: 'Maria Rodriguez', email: 'maria@inatec.edu', password: 'password', role: 'Docente' },
+      { id: 1, fullName: 'Admin', email: 'admin', password: 'password', role: 'Admin' },
+      { id: 2, fullName: 'User', email: 'user', password: 'password', role: 'Docente' },
     ]);
 
     this.categories.set([
@@ -134,21 +131,21 @@ export class DataService {
     const now = new Date();
     this.reservations.set([
       { id: 1, equipmentId: 2, solicitanteId: 2, startTime: new Date(now.getTime() + 2 * 24 * 3600 * 1000), endTime: new Date(now.getTime() + (2 * 24 + 2) * 3600 * 1000), status: 'Aprobada' },
-      { id: 2, equipmentId: 1, solicitanteId: 3, startTime: new Date(now.getTime() + 1 * 24 * 3600 * 1000), endTime: new Date(now.getTime() + (1 * 24 + 3) * 3600 * 1000), status: 'Pendiente' },
+      { id: 2, equipmentId: 1, solicitanteId: 2, startTime: new Date(now.getTime() + 1 * 24 * 3600 * 1000), endTime: new Date(now.getTime() + (1 * 24 + 3) * 3600 * 1000), status: 'Pendiente' },
       { id: 3, equipmentId: 3, solicitanteId: 2, startTime: new Date(now.getTime() - 3 * 24 * 3600 * 1000), endTime: new Date(now.getTime() - (3 * 24 - 2) * 3600 * 1000), status: 'Rechazada' },
-      { id: 4, spaceId: 1, solicitanteId: 3, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 10), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 12), status: 'Aprobada' },
+      { id: 4, spaceId: 1, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 10), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 12), status: 'Aprobada' },
       { id: 5, spaceId: 3, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3, 14), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 3, 16), status: 'Pendiente' },
-      { id: 6, spaceId: 2, solicitanteId: 3, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5, 9), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5, 12), status: 'Aprobada' },
+      { id: 6, spaceId: 2, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5, 9), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5, 12), status: 'Aprobada' },
       // Seed more data for Aula Magna for chart
       { id: 7, spaceId: 2, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 11), status: 'Aprobada' }, // Today
-      { id: 8, spaceId: 2, solicitanteId: 3, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 14), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 16), status: 'Aprobada' }, // Yesterday
+      { id: 8, spaceId: 2, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 14), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 16), status: 'Aprobada' }, // Yesterday
       { id: 9, spaceId: 2, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 10), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1, 12), status: 'Aprobada' }, // Yesterday
-      { id: 10, spaceId: 2, solicitanteId: 3, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3, 9), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3, 12), status: 'Aprobada' }, // 3 days ago
+      { id: 10, spaceId: 2, solicitanteId: 2, startTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3, 9), endTime: new Date(now.getFullYear(), now.getMonth(), now.getDate() - 3, 12), status: 'Aprobada' }, // 3 days ago
     ]);
 
     this.reports.set([
         { id: 1, title: 'Proyector no enciende', description: 'El proyector del Aula B-101 no da señal de video. He probado con varios cables y no funciona.', solicitanteId: 2, status: 'Abierto', createdAt: new Date(now.getTime() - 2 * 24 * 3600 * 1000), updatedAt: new Date(now.getTime() - 2 * 24 * 3600 * 1000), equipmentId: 2 },
-        { id: 2, title: 'Aire acondicionado gotea', description: 'El aire acondicionado del Laboratorio 1 está goteando sobre una de las mesas.', solicitanteId: 3, status: 'En Proceso', createdAt: new Date(now.getTime() - 1 * 24 * 3600 * 1000), updatedAt: new Date(now.getTime() - 12 * 3600 * 1000), spaceId: 1 },
+        { id: 2, title: 'Aire acondicionado gotea', description: 'El aire acondicionado del Laboratorio 1 está goteando sobre una de las mesas.', solicitanteId: 2, status: 'En Proceso', createdAt: new Date(now.getTime() - 1 * 24 * 3600 * 1000), updatedAt: new Date(now.getTime() - 12 * 3600 * 1000), spaceId: 1 },
         { id: 3, title: 'Mouse no funciona', description: 'El mouse de la laptop HP está fallando.', solicitanteId: 2, status: 'Cerrado', createdAt: new Date(now.getTime() - 5 * 24 * 3600 * 1000), updatedAt: new Date(now.getTime() - 4 * 24 * 3600 * 1000), equipmentId: 4 },
     ]);
 

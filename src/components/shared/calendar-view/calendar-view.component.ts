@@ -20,8 +20,8 @@ export class CalendarViewComponent implements AfterViewInit, OnDestroy {
         title: this.dataService.getSpaceName(res.spaceId!),
         start: res.startTime,
         end: res.endTime,
-        backgroundColor: '#10B981', // teal-500
-        borderColor: '#059669', // teal-600
+        backgroundColor: '#8CC63F',
+        borderColor: '#79B335', 
     }));
   });
 

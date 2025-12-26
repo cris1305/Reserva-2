@@ -2,12 +2,41 @@
 <div class="space-y-8">
     <h1 class="text-3xl font-bold text-gray-800">Dashboard de Administrador</h1>
     
-    <!-- Metrics Widgets -->
+    <!-- Tarjeta de Resumen con IA -->
+    <div class="bg-white p-6 rounded-xl shadow-lg border-2 border-transparent bg-gradient-to-br from-rose-50 to-pink-100">
+        <div class="flex items-start space-x-4">
+            <div class="bg-rose-200 p-3 rounded-full flex-shrink-0">
+                <svg class="h-8 w-8 text-rose-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                </svg>
+            </div>
+            <div class="flex-grow">
+                <p class="font-bold text-gray-800">Resumen del Día con IA</p>
+                @switch (aiSummary()) {
+                    @case ('loading') {
+                        <div class="mt-2 space-y-2">
+                            <div class="h-4 bg-slate-200 rounded animate-pulse w-3/4"></div>
+                            <div class="h-4 bg-slate-200 rounded animate-pulse w-1/2"></div>
+                        </div>
+                    }
+                    @case (null) {
+                        <p class="mt-2 text-sm text-rose-600">No se pudo generar el resumen.</p>
+                        <button (click)="getAiSummary()" class="mt-2 text-sm text-rose-700 font-semibold hover:underline">Reintentar</button>
+                    }
+                    @default {
+                        <p class="mt-2 text-sm text-gray-600">{{ aiSummary() }}</p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Widgets de Métricas -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Pending Reservations -->
+        <!-- Solicitudes Pendientes -->
         <a routerLink="/admin/reservations" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-4">
-            <div class="bg-amber-100 p-3 rounded-full">
-                <svg class="h-8 w-8 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="bg-orange-100 p-3 rounded-full">
+                <svg class="h-8 w-8 text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
             </div>
@@ -17,10 +46,10 @@
             </div>
         </a>
 
-        <!-- Spaces Occupied Today -->
+        <!-- Espacios Ocupados Hoy -->
         <a routerLink="/admin/calendar" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-4">
-            <div class="bg-emerald-100 p-3 rounded-full">
-                <svg class="h-8 w-8 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="bg-green-100 p-3 rounded-full">
+                <svg class="h-8 w-8 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                 </svg>
@@ -31,10 +60,10 @@
             </div>
         </a>
 
-        <!-- Equipment in Use Today -->
+        <!-- Equipos en Uso Hoy -->
         <a routerLink="/admin/inventory" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-4">
-            <div class="bg-sky-100 p-3 rounded-full">
-                <svg class="h-8 w-8 text-sky-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="bg-blue-100 p-3 rounded-full">
+                <svg class="h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-1.621-.87a3 3 0 0 1-.879-2.122v-1.007M5.25 6.002a2.25 2.25 0 0 1 2.25-2.25h9a2.25 2.25 0 0 1 2.25 2.25v9a2.25 2.25 0 0 1-2.25-2.25h-9a2.25 2.25 0 0 1-2.25-2.25v-9Z" />
                 </svg>
             </div>
@@ -44,7 +73,7 @@
             </div>
         </a>
 
-        <!-- Open Reports -->
+        <!-- Reportes Abiertos -->
         <a routerLink="/admin/reports" class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center space-x-4">
             <div class="bg-rose-100 p-3 rounded-full">
                 <svg class="h-8 w-8 text-rose-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -58,7 +87,7 @@
         </a>
     </div>
 
-    <!-- Activity Chart -->
+    <!-- Gráfico de Actividad -->
     @if (chartData().data.length > 0) {
         <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
             <app-activity-chart [chartData]="chartData()" [resourceName]="chartData().resourceName" />

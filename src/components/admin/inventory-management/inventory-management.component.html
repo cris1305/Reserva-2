@@ -5,7 +5,7 @@
         <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg">
              <div class="flex justify-between items-center mb-4">
                 <h2 class="text-xl font-bold text-gray-700">Categorías</h2>
-                <button (click)="openCategoryModal('add')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md text-sm flex items-center gap-2">
+                <button (click)="openCategoryModal('add')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded-md text-sm flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /></svg>
                     <span class="hidden sm:inline">Añadir</span>
                 </button>
@@ -24,7 +24,7 @@
                             <span class="truncate">{{ category.name }}</span>
                         </div>
                         <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-                            <button (click)="openCategoryModal('edit', category)" class="p-1 text-slate-500 hover:text-indigo-600 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.42a4 4 0 0 0-.886 1.343Z" /></svg></button>
+                            <button (click)="openCategoryModal('edit', category)" class="p-1 text-slate-500 hover:text-rose-600 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.42a4 4 0 0 0-.886 1.343Z" /></svg></button>
                             <button (click)="openDeleteConfirmation(category, 'Category')" class="p-1 text-slate-500 hover:text-rose-600 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.58.22-2.365.468a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193v-.443A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" /></svg></button>
                         </div>
                     </li>
@@ -39,7 +39,7 @@
     <div class="xl:col-span-2 bg-white p-4 sm:p-6 rounded-xl shadow-lg">
         <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
             <h2 class="text-xl font-bold text-gray-700">Lista de Equipos</h2>
-             <button (click)="openEquipmentModal('add')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md flex items-center gap-2 w-full sm:w-auto">
+             <button (click)="openEquipmentModal('add')" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded-md flex items-center gap-2 w-full sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" /></svg>
                 Añadir Equipo
             </button>
@@ -73,13 +73,13 @@
                             <td class="py-4 px-4 text-slate-500">{{ item.uniqueIdentifier }}</td>
                             <td class="py-4 px-4">{{ dataService.getCategory(item.categoryId)?.name }}</td>
                             <td class="py-4 px-4">
-                               <span [class]="'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + (item.status === 'Disponible' ? 'bg-teal-100 text-teal-800' : 'bg-amber-100 text-amber-800')">
+                               <span [class]="'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + (item.status === 'Disponible' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800')">
                                     {{ item.status }}
                                 </span>
                             </td>
                             <td class="py-4 px-4">
                                 <div class="flex items-center justify-center gap-2">
-                                    <button (click)="openEquipmentModal('edit', item)" class="p-2 text-slate-500 hover:text-indigo-600 rounded-md transition-colors hover:bg-slate-100"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.42a4 4 0 0 0-.886 1.343Z" /></svg></button>
+                                    <button (click)="openEquipmentModal('edit', item)" class="p-2 text-slate-500 hover:text-rose-600 rounded-md transition-colors hover:bg-slate-100"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.42a4 4 0 0 0-.886 1.343Z" /></svg></button>
                                     <button (click)="openDeleteConfirmation(item, 'Equipment')" class="p-2 text-slate-500 hover:text-rose-600 rounded-md transition-colors hover:bg-slate-100"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.58.22-2.365.468a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193v-.443A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" /></svg></button>
                                 </div>
                             </td>
@@ -106,7 +106,7 @@
                         <div class="flex-grow">
                             <div class="flex justify-between items-start">
                                 <p class="font-bold text-gray-800">{{ item.name }}</p>
-                                 <span [class]="'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + (item.status === 'Disponible' ? 'bg-teal-100 text-teal-800' : 'bg-amber-100 text-amber-800')">
+                                 <span [class]="'px-2 inline-flex text-xs leading-5 font-semibold rounded-full ' + (item.status === 'Disponible' ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800')">
                                     {{ item.status }}
                                 </span>
                             </div>
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                     <div class="mt-4 pt-3 border-t flex justify-end items-center gap-2">
-                         <button (click)="openEquipmentModal('edit', item)" class="p-2 text-slate-500 hover:text-indigo-600 rounded-md transition-colors hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.42a4 4 0 0 0-.886 1.343Z" /></svg></button>
+                         <button (click)="openEquipmentModal('edit', item)" class="p-2 text-slate-500 hover:text-rose-600 rounded-md transition-colors hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path d="m2.695 14.762-1.262 3.155a.5.5 0 0 0 .65.65l3.155-1.262a4 4 0 0 0 1.343-.886L17.5 5.501a2.121 2.121 0 0 0-3-3L3.58 13.42a4 4 0 0 0-.886 1.343Z" /></svg></button>
                         <button (click)="openDeleteConfirmation(item, 'Equipment')" class="p-2 text-slate-500 hover:text-rose-600 rounded-md transition-colors hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5"><path fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.58.22-2.365.468a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193v-.443A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z" clip-rule="evenodd" /></svg></button>
                     </div>
                 </div>
@@ -137,16 +137,16 @@
                 <div class="p-6 space-y-4">
                     <div>
                         <label for="categoryName" class="block text-sm font-medium text-gray-700">Nombre de Categoría</label>
-                        <input type="text" id="categoryName" name="categoryName" [(ngModel)]="category.name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="text" id="categoryName" name="categoryName" [(ngModel)]="category.name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500">
                     </div>
                     <div>
                         <label for="categoryImageUrl" class="block text-sm font-medium text-gray-700">URL de Imagen (Opcional)</label>
-                        <input type="url" id="categoryImageUrl" name="categoryImageUrl" [(ngModel)]="category.imageUrl" placeholder="https://..." class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="url" id="categoryImageUrl" name="categoryImageUrl" [(ngModel)]="category.imageUrl" placeholder="https://..." class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-rose-500 focus:border-rose-500">
                     </div>
                 </div>
                 <div class="p-4 bg-slate-50 flex justify-end space-x-3 rounded-b-2xl">
                     <button type="button" (click)="closeCategoryModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-md">Cancelar</button>
-                    <button type="submit" [disabled]="categoryForm.invalid" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-indigo-400">Guardar</button>
+                    <button type="submit" [disabled]="categoryForm.invalid" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-rose-600/70">Guardar</button>
                 </div>
             </form>
         </div>
@@ -164,15 +164,15 @@
                 <div class="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
                     <div>
                         <label for="equipmentName" class="block text-sm font-medium text-gray-700">Nombre</label>
-                        <input type="text" name="equipmentName" [(ngModel)]="equipment.name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="text" name="equipmentName" [(ngModel)]="equipment.name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500">
                     </div>
                     <div>
                         <label for="equipmentImageUrl" class="block text-sm font-medium text-gray-700">URL de Imagen (Opcional)</label>
-                        <input type="url" name="equipmentImageUrl" [(ngModel)]="equipment.imageUrl" placeholder="https://..." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="url" name="equipmentImageUrl" [(ngModel)]="equipment.imageUrl" placeholder="https://..." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500">
                     </div>
                     <div>
                         <label for="equipmentCategory" class="block text-sm font-medium text-gray-700">Categoría</label>
-                        <select name="equipmentCategory" [(ngModel)]="equipment.categoryId" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <select name="equipmentCategory" [(ngModel)]="equipment.categoryId" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500">
                             <option [value]="0" disabled>Seleccione una categoría</option>
                             @for (category of categories(); track category.id) {
                                 <option [value]="category.id">{{ category.name }}</option>
@@ -181,16 +181,16 @@
                     </div>
                     <div>
                         <label for="equipmentId" class="block text-sm font-medium text-gray-700">Identificador Único</label>
-                        <input type="text" name="equipmentId" [(ngModel)]="equipment.uniqueIdentifier" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <input type="text" name="equipmentId" [(ngModel)]="equipment.uniqueIdentifier" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500">
                     </div>
                     <div>
                         <label for="equipmentDesc" class="block text-sm font-medium text-gray-700">Descripción</label>
-                        <textarea name="equipmentDesc" [(ngModel)]="equipment.description" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                        <textarea name="equipmentDesc" [(ngModel)]="equipment.description" rows="3" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500"></textarea>
                     </div>
                 </div>
                 <div class="p-4 bg-slate-50 flex justify-end space-x-3 rounded-b-2xl">
                     <button type="button" (click)="closeEquipmentModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold py-2 px-4 rounded-md">Cancelar</button>
-                    <button type="submit" [disabled]="equipmentForm.invalid" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-indigo-400">Guardar</button>
+                    <button type="submit" [disabled]="equipmentForm.invalid" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded-md disabled:bg-rose-600/70">Guardar</button>
                 </div>
             </form>
         </div>

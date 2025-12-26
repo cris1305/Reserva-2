@@ -1,3 +1,4 @@
+
 import { Component, ChangeDetectionStrategy, input, ElementRef, AfterViewInit, viewChild, effect } from '@angular/core';
 
 // Declare d3 to avoid TypeScript errors since it's loaded from a script tag
@@ -89,7 +90,7 @@ export class ActivityChartComponent implements AfterViewInit {
         .attr('y', (d: number) => y(d))
         .attr('width', x.bandwidth())
         .attr('height', 0) // Start with height 0 for animation
-        .attr('fill', '#4f46e5') // Indigo-600 color from Tailwind
+        .attr('fill', '#E11D48') // New primary Rose color
         .attr('rx', 4) // Rounded corners
       .transition()
         .duration(800)

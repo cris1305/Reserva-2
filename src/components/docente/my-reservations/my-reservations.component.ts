@@ -3,12 +3,13 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
 import { Reservation, ReservationStatus } from '../../../models';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-my-reservations',
   templateUrl: './my-reservations.component.html',
   standalone: true,
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, DatePipe, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyReservationsComponent {
@@ -32,9 +33,9 @@ export class MyReservationsComponent {
   
   getStatusClass(status: ReservationStatus): string {
     switch(status) {
-      case 'Aprobada': return 'bg-teal-100 text-teal-800';
+      case 'Aprobada': return 'bg-green-100 text-green-800';
       case 'Rechazada': return 'bg-rose-100 text-rose-800';
-      case 'Pendiente': return 'bg-amber-100 text-amber-800';
+      case 'Pendiente': return 'bg-orange-100 text-orange-800';
       default: return 'bg-slate-100 text-slate-800';
     }
   }

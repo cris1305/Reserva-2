@@ -36,7 +36,7 @@
                             <td class="py-4 px-4 text-center">
                                 <a [routerLink]="['/docente/create-report']" 
                                    [queryParams]="{ resourceType: reservation.equipmentId ? 'equipment' : 'space', resourceId: reservation.equipmentId || reservation.spaceId }"
-                                   class="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">
+                                   class="text-rose-600 hover:text-rose-700 text-sm font-medium transition-colors">
                                    Reportar Incidencia
                                 </a>
                             </td>
@@ -54,9 +54,9 @@
                         <div>
                             <p class="font-bold text-gray-800">{{ getResourceName(reservation) }}</p>
                              @if (reservation.equipmentId) {
-                                <p class="text-xs text-slate-500">(Equipo)</p>
+                                <p class="text-xs text-slate-500">(Equipo)</span>
                             } @else {
-                                <p class="text-xs text-slate-500">(Espacio)</p>
+                                <p class="text-xs text-slate-500">(Espacio)</span>
                             }
                         </div>
                         <span [class]="'px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ' + getStatusClass(reservation.status)">
@@ -70,7 +70,7 @@
                      <div class="mt-4 pt-3 border-t text-center">
                          <a [routerLink]="['/docente/create-report']" 
                            [queryParams]="{ resourceType: reservation.equipmentId ? 'equipment' : 'space', resourceId: reservation.equipmentId || reservation.spaceId }"
-                           class="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">
+                           class="text-rose-600 hover:text-rose-700 text-sm font-medium transition-colors">
                            Reportar Incidencia
                         </a>
                     </div>

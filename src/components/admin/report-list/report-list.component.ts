@@ -1,4 +1,3 @@
-
 import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -32,8 +31,8 @@ export class ReportListComponent {
   getStatusClass(status: ReportStatus): string {
     switch(status) {
       case 'Abierto': return 'bg-rose-100 text-rose-800';
-      case 'En Proceso': return 'bg-amber-100 text-amber-800';
-      case 'Cerrado': return 'bg-teal-100 text-teal-800';
+      case 'En Proceso': return 'bg-orange-100 text-orange-800';
+      case 'Cerrado': return 'bg-green-100 text-green-800';
       default: return 'bg-slate-100 text-slate-800';
     }
   }
@@ -41,7 +40,7 @@ export class ReportListComponent {
   getFilterButtonClass(status: ReportStatus | 'Todos'): string {
     const baseClass = 'px-4 py-2 text-sm font-medium rounded-md transition-colors';
     if (this.filter() === status) {
-        return `${baseClass} bg-indigo-600 text-white`;
+        return `${baseClass} bg-rose-600 text-white`;
     }
     return `${baseClass} bg-white text-gray-700 hover:bg-slate-100 border`;
   }

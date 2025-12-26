@@ -21,9 +21,9 @@
                         <tr class="border-b hover:bg-slate-50">
                             <td class="py-4 px-4">
                                 @if (reservation.equipmentId) {
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-sky-100 text-sky-800">Equipo</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Equipo</span>
                                 } @else {
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">Espacio</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Espacio</span>
                                 }
                             </td>
                             <td class="py-4 px-4 font-medium">
@@ -34,7 +34,7 @@
                             <td class="py-4 px-4">{{ reservation.endTime | date:'short' }}</td>
                             <td class="py-4 px-4">
                                 <div class="flex items-center justify-center space-x-2">
-                                    <button (click)="approve(reservation.id)" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors">
+                                    <button (click)="approve(reservation.id)" class="bg-[#8CC63F] hover:bg-[#79B335] text-white font-bold py-1 px-3 rounded-md text-sm transition-colors">
                                         Aprobar
                                     </button>
                                     <button (click)="reject(reservation.id)" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors">
@@ -57,9 +57,9 @@
                            {{ dataService.getResourceName(reservation) }}
                         </div>
                         @if (reservation.equipmentId) {
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-sky-100 text-sky-800">Equipo</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Equipo</span>
                         } @else {
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-emerald-100 text-emerald-800">Espacio</span>
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Espacio</span>
                         }
                     </div>
                     <div class="mt-2 text-sm text-slate-600 space-y-1">
@@ -71,7 +71,7 @@
                         <button (click)="reject(reservation.id)" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors">
                             Rechazar
                         </button>
-                        <button (click)="approve(reservation.id)" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-1 px-3 rounded-md text-sm transition-colors">
+                        <button (click)="approve(reservation.id)" class="bg-[#8CC63F] hover:bg-[#79B335] text-white font-bold py-1 px-3 rounded-md text-sm transition-colors">
                             Aprobar
                         </button>
                     </div>
