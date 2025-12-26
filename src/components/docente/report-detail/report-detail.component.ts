@@ -25,10 +25,16 @@ export class ReportDetailComponent {
   newMessage = signal('');
 
   report = computed<Report | undefined>(() => {
-    return this.dataService.reports().find(r => r.id === this.reportId());
+    const r = this.dataService.reports().find(r => r.id === this.reportId());
+    // Docente can only see their own reports
+    if (r && r.solicitanteId === this.authService.currentUser()?.id) {
+      return r;
+    }
+    return undefined;
   });
 
   messages = computed(() => {
+    if (!this.report()) return [];
     return this.dataService.reportMessages()
       .filter(m => m.reportId === this.reportId())
       .sort((a, b) => a.sentAt.getTime() - b.sentAt.getTime());
@@ -54,4 +60,9 @@ export class ReportDetailComponent {
   getStatusClass(status: ReportStatus): string {
     switch(status) {
       case 'Abierto': return 'bg-rose-100 text-rose-800';
-      case 'En Proceso': return 'bg-orange-100 text
+      case 'En Proceso': return 'bg-orange-100 text-orange-800';
+      case 'Cerrado': return 'bg-green-100 text-green-800';
+      default: return 'bg-slate-100 text-slate-800';
+    }
+  }
+}

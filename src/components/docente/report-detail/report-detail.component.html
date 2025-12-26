@@ -4,7 +4,7 @@
     <div class="bg-white p-6 rounded-xl shadow-lg">
         <div class="flex flex-col md:flex-row justify-between items-start gap-4">
             <div>
-                <a routerLink="/docente/reports" class="text-[#004A99] hover:underline text-sm mb-2 inline-block">&larr; Volver a Mis Reportes</a>
+                <a routerLink="/docente/reports" class="text-rose-600 hover:underline text-sm mb-2 inline-block">&larr; Volver a Mis Reportes</a>
                 <h1 class="text-2xl font-bold text-gray-800">{{ currentReport.title }}</h1>
                 <p class="text-sm text-slate-500 mt-1">
                     Recurso afectado: <strong>{{ dataService.getResourceName(currentReport) }}</strong>
@@ -24,7 +24,7 @@
         <div class="space-y-4 max-h-[50vh] overflow-y-auto pr-4">
             @for (message of messages(); track message.id) {
                 <div [class]="'flex ' + (message.authorId === authService.currentUser()?.id ? 'justify-end' : 'justify-start')">
-                    <div [class]="'max-w-xl p-3 rounded-xl ' + (message.authorId === authService.currentUser()?.id ? 'bg-[#004A99] text-white' : 'bg-slate-100 text-gray-800')">
+                    <div [class]="'max-w-xl p-3 rounded-xl ' + (message.authorId === authService.currentUser()?.id ? 'bg-rose-600 text-white' : 'bg-slate-100 text-gray-800')">
                         <p class="font-bold text-sm">{{ dataService.getUserName(message.authorId) }}</p>
                         <p>{{ message.text }}</p>
                         <p class="text-xs mt-1 text-right opacity-75">{{ message.sentAt | date:'short' }}</p>
@@ -38,9 +38,9 @@
         <!-- Reply Form -->
         @if (currentReport.status !== 'Cerrado') {
             <div class="mt-6 border-t pt-4">
-                <form (ngSubmit)="sendMessage()" class="flex gap-4">
-                    <input type="text" [(ngModel)]="newMessage" name="newMessage" placeholder="Escribe tu respuesta..." class="flex-grow border-gray-300 rounded-md shadow-sm focus:ring-[#004A99] focus:border-[#004A99]">
-                    <button type="submit" [disabled]="!newMessage().trim()" class="bg-[#004A99] hover:bg-[#003B7A] text-white font-bold py-2 px-6 rounded-md disabled:bg-[#004A99]/70">
+                <form (ngSubmit)="sendMessage()" class="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                    <input type="text" [(ngModel)]="newMessage" name="newMessage" placeholder="Escribe tu respuesta..." class="flex-grow border-gray-300 rounded-md shadow-sm focus:ring-rose-500 focus:border-rose-500">
+                    <button type="submit" [disabled]="!newMessage().trim()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-6 rounded-md disabled:bg-rose-600/70">
                         Enviar
                     </button>
                 </form>
@@ -56,6 +56,6 @@
     <div class="text-center p-8 bg-white rounded-xl shadow-lg">
         <h2 class="text-xl font-semibold text-gray-700">Reporte no encontrado</h2>
         <p class="text-slate-500 mt-2">No tienes permiso para ver este reporte o no existe.</p>
-        <a routerLink="/docente/reports" class="mt-4 inline-block bg-[#004A99] text-white font-bold py-2 px-4 rounded-md">Volver a Mis Reportes</a>
+        <a routerLink="/docente/reports" class="mt-4 inline-block bg-rose-600 text-white font-bold py-2 px-4 rounded-md">Volver a Mis Reportes</a>
     </div>
 }
