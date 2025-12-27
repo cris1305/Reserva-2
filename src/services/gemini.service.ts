@@ -11,14 +11,31 @@ export interface DashboardMetrics {
 
 @Injectable({ providedIn: 'root' })
 export class GeminiService {
-  private ai: GoogleGenAI;
+  private ai: GoogleGenAI | null = null;
   
   constructor() {
-    // Según las instrucciones, se espera que la clave de la API esté en el entorno.
-    this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    // En un entorno de navegador, `process.env` puede no estar disponible.
+    // Esta comprobación robusta evita que la aplicación se bloquee si la variable de entorno no está definida,
+    // permitiendo que el resto de la aplicación funcione.
+    try {
+      if (typeof process !== 'undefined' && process.env && process.env.API_KEY) {
+        this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      } else {
+        console.warn('La variable de entorno API_KEY no se encontró. Las características de IA estarán deshabilitadas.');
+      }
+    } catch (error) {
+      console.error('Error al inicializar GeminiService:', error);
+      // Aseguramos que `ai` es nulo si hay cualquier error.
+      this.ai = null;
+    }
   }
 
   async generateDashboardSummary(metrics: DashboardMetrics): Promise<string> {
+    if (!this.ai) {
+      console.error('GeminiService not initialized. Cannot generate summary.');
+      throw new Error('No se pudo generar el resumen de IA.');
+    }
+
     const prompt = `
       Eres un asistente de IA para el administrador de recursos de un campus tecnológico llamado INATEC.
       Tu tono debe ser profesional, conciso y ligeramente positivo.
@@ -45,6 +62,11 @@ export class GeminiService {
   }
 
   async generateUserAnalysis(users: User[]): Promise<string> {
+    if (!this.ai) {
+        console.error('GeminiService not initialized. Cannot generate user analysis.');
+        throw new Error('No se pudo generar el análisis de usuarios.');
+    }
+
     const adminCount = users.filter(u => u.role === 'Admin').length;
     const docenteCount = users.filter(u => u.role === 'Docente').length;
 
@@ -72,6 +94,11 @@ export class GeminiService {
   }
 
   async generateEquipmentRecommendation(query: string, equipmentList: Equipment[]): Promise<{ recommendedEquipmentId: number; justification: string; }> {
+    if (!this.ai) {
+        console.error('GeminiService not initialized. Cannot generate equipment recommendation.');
+        throw new Error('No se pudo obtener la recomendación de IA.');
+    }
+    
     const simplifiedList = equipmentList.map(e => ({
         id: e.id,
         name: e.name,
@@ -118,6 +145,11 @@ export class GeminiService {
   }
 
   async generateSpaceAvailabilitySummary(space: Space, availability: { date: Date; reservations: any[] }[]): Promise<string> {
+    if (!this.ai) {
+        console.error('GeminiService not initialized. Cannot generate space summary.');
+        throw new Error('No se pudo generar el análisis del espacio.');
+    }
+
     const availabilitySummary = availability.map(day => {
         const date = day.date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric' });
         const reservationCount = day.reservations.length;
