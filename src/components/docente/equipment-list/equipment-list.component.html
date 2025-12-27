@@ -35,8 +35,11 @@
                     <p>Lo siento, no pude encontrar un equipo que coincida con tu solicitud en este momento.</p>
                 </div>
             }
-            @case (res) {
-                @if (typeof res === 'object' && res.recommendation) {
+            @case ('idle') {
+                <!-- No UI for idle state -->
+            }
+            @default {
+                @if (suggestionResult(); as res) {
                     <div class="mt-4 p-4 bg-rose-50 rounded-lg animate-fade-in">
                         <p class="text-sm text-rose-800 font-semibold mb-2"><strong class="font-bold">Sugerencia:</strong> {{ res.justification }}</p>
                         <div class="bg-white p-3 rounded-md border flex flex-col sm:flex-row items-center gap-4">

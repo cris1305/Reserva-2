@@ -54,9 +54,9 @@
                         <div>
                             <p class="font-bold text-gray-800">{{ getResourceName(reservation) }}</p>
                              @if (reservation.equipmentId) {
-                                <p class="text-xs text-slate-500">(Equipo)</span>
+                                <p class="text-xs text-slate-500">(Equipo)</p>
                             } @else {
-                                <p class="text-xs text-slate-500">(Espacio)</span>
+                                <p class="text-xs text-slate-500">(Espacio)</p>
                             }
                         </div>
                         <span [class]="'px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ' + getStatusClass(reservation.status)">
