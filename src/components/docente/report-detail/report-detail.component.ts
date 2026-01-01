@@ -1,6 +1,6 @@
 
 import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
@@ -12,7 +12,7 @@ import { Report, ReportStatus } from '../../../models';
   selector: 'app-report-detail',
   templateUrl: './report-detail.component.html',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportDetailComponent {

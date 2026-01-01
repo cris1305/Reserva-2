@@ -1,5 +1,6 @@
+
 import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
 import { Reservation, ReservationStatus } from '../../../models';
@@ -9,7 +10,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-my-reservations',
   templateUrl: './my-reservations.component.html',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink],
+  imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyReservationsComponent {

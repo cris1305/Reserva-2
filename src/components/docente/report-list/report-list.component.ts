@@ -1,6 +1,6 @@
 
 import { Component, ChangeDetectionStrategy, inject, computed } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
@@ -10,7 +10,7 @@ import { ReportStatus } from '../../../models';
   selector: 'app-report-list',
   templateUrl: './report-list.component.html',
   standalone: true,
-  imports: [CommonModule, DatePipe, RouterLink],
+  imports: [CommonModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReportListComponent {

@@ -1,5 +1,6 @@
+
 import { Component, ChangeDetectionStrategy, inject, signal, computed, ElementRef, viewChild } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { DataService } from '../../../services/data.service';
 import { AuthService } from '../../../services/auth.service';
@@ -16,7 +17,7 @@ type SuggestionResult = {
   selector: 'app-equipment-list',
   templateUrl: './equipment-list.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe],
+  imports: [CommonModule, FormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EquipmentListComponent {

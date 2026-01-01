@@ -1,6 +1,6 @@
 
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { DataService } from '../../../services/data.service';
 import { ToastService } from '../../../services/toast.service';
 import { NotificationService } from '../../../services/notification.service';
@@ -9,7 +9,7 @@ import { NotificationService } from '../../../services/notification.service';
   selector: 'app-reservation-requests',
   templateUrl: './reservation-requests.component.html',
   standalone: true,
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ReservationRequestsComponent {

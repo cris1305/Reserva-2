@@ -1,5 +1,6 @@
+
 import { Component, ChangeDetectionStrategy, AfterViewInit, OnDestroy, inject, signal, computed, effect } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { DataService } from '../../../services/data.service';
@@ -14,7 +15,7 @@ declare var L: any; // Declare Leaflet to avoid TypeScript errors
   selector: 'app-space-map',
   templateUrl: './space-map.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpaceMapComponent implements AfterViewInit, OnDestroy {

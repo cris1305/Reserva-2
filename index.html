@@ -5,7 +5,10 @@
   <title>Sistema de Reservas INATEC</title>
   
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <!-- Se añade theme-color para una mejor integración en móviles -->
+  <meta name="theme-color" content="#be123c">
+  
+  <!-- Se elimina la referencia al favicon.ico para evitar el error 404 -->
   <script src="https://cdn.tailwindcss.com"></script>
   
   <!-- Leaflet.js for interactive maps -->
@@ -42,5 +45,8 @@
 </head>
 <body class="bg-rose-50 text-gray-800">
   <app-root></app-root>
+
+  <!-- CORRECCIÓN: Se añade esta línea para cargar el punto de entrada de la aplicación -->
+  <script type="module" src="index.tsx"></script>
 </body>
 </html>
